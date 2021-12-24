@@ -285,6 +285,14 @@ data-media-id="{{ media_id }}" />
                 </div>
 
                 {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                  {%- for tag in product.tags -%}
+                    {%- if tag == "Personalised" -%}
+                      <p class="line-item-property__field" >
+                        <label for="your-engraving">Your engraving*</label>
+                        <input id="your-engraving" type="text" name="properties[Your Engraving]">
+                      </p>
+                    {%- endif -%}
+                  {%- endfor -%}
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
                   <div class="product-form__buttons">
                     <button

@@ -323,3 +323,21 @@
     transition: background-color var(--duration-long) ease;
   }
 }
+.Memory-Foam {
+ margin-top: 0.4em;
+    margin-left: 0.4em;
+    z-index: 2;
+    position: absolute;
+    border: 1px solid transparent;
+    border-radius: 4rem;
+    display: inline-block;
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
+    line-height: 1;
+    padding: .6rem 1.3rem;
+    text-align: center;
+    border-color: rgba(var(--color-badge-border),var(--alpha-badge-border));
+    color: #ffffff;
+    word-break: break-word;
+    background-color: #312784;
+}

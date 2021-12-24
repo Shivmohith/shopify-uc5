@@ -1,0 +1,209 @@
+<div class="flickity-slideshow">
+<div class="carousel">
+{% for block in section.blocks %}
+<div class="carousel-cell">
+<img class="flickity-desktop"
+data-flickity-lazyload-srcset="
+{{ block.settings.image | img_url: '1440x' }} 1440w,
+{{ block.settings.image | img_url: '1080x' }} 1080w,
+{{ block.settings.image | img_url: '720x' }} 767w,
+{{ block.settings.image | img_url: '480x' }} 480w"
+sizes="(min-width: 480px) 1440px, 1080px, 767px, 480x"
+data-flickity-lazyload-src="{{ block.settings.image | img_url: 'master' }}"
+alt="{{ block.settings.image.alt | escape }}"
+border="0"/>
+{% if block.settings.mobile_image != blank %}
+<img class="flickity-mobile"
+data-flickity-lazyload-srcset="
+{{ block.settings.mobile_image | img_url: '479x' }} 479w"
+sizes="(max-width: 479px) 479px"
+data-flickity-lazyload-src="{{ block.settings.mobile_image | img_url: 'master' }}"
+alt="{{ block.settings.mobile_image.alt | escape }}"
+border="0" />
+{% endif %}
+{% if section.settings.overlay %}
+<div class="overlay-color"></div>
+{% endif %}
+<div class="flickity-overlay">
+{% if block.settings.subtitle != blank %}
+<h3 class="flickity-subtitle">{{ block.settings.subtitle }}</h3>
+{% endif %}
+{% if block.settings.title != blank %}
+<h2 class="flickity-title h1">{{ block.settings.title }}</h2>
+{% endif %}
+{% if block.settings.btnlink != blank or block.settings.btntext != blank %}
+<a href="{{ block.settings.btnlink }}" class="flickity-btn">{{ block.settings.btntext }}</a>
+{% endif %}
+</div>
+</div>
+{% endfor %}
+</div>
+<!--- Coded by bluish.io --->
+</div>
+<script>
+var elem = document.querySelector('.carousel');
+var flkty = new Flickity( elem, {
+contain: true,
+{% if section.settings.loop %}
+wrapAround: true,
+{% endif %}
+{% if section.settings.auto %}
+autoPlay: {{ section.settings.range | times: 1000 }},
+pauseAutoPlayOnHover: false,
+{% endif %}
+imagesLoaded: true,
+pageDots: false,
+lazyLoad: true,
+{% if section.settings.fade %}
+fade: true
+{% endif %}
+});
+{% if request.design_mode %}
+document.addEventListener("shopify:section:load", function(event) {
+var elem = document.querySelector('.carousel');
+var flkty = new Flickity( elem, {
+contain: true,
+{% if section.settings.loop %}
+wrapAround: true,
+{% endif %}
+{% if section.settings.auto %}
+autoPlay: {{ section.settings.range | times: 1000 }},
+pauseAutoPlayOnHover: false,
+{% endif %}
+imagesLoaded: true,
+pageDots: false,
+lazyLoad: true,
+{% if section.settings.fade %}
+fade: true
+{% endif %}
+});
+});
+{% endif %}
+</script>
+{% style %}
+.flickity-overlay .flickity-title, .flickity-overlay .flickity-subtitle {
+color: {{ section.settings.textcolor }};
+}
+.flickity-slideshow .flickity-button-icon {
+color: {{ section.settings.navigation_color }};
+}
+.flickity-btn {
+border: 2px solid {{ section.settings.btnbgcolor }};
+color: {{ section.settings.btncolor }} !important;
+}
+.flickity-btn:hover {
+background-color: {{ section.settings.btnbgcolor }};
+}
+{% if section.settings.auto %}
+.flickity-slideshow .carousel-cell {
+transition: 0.1s ease;
+}
+.flickity-slideshow .carousel-cell img {
+transition: 0.1s ease;
+}
+{% endif %}
+{% endstyle %}
+{% schema %}
+{
+"name": "Flickity slideshow",
+"settings": [
+{
+"type": "checkbox",
+"id": "overlay",
+"label": "Enable dark overlay",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "loop",
+"label": "Enable loop",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "fade",
+"label": "Enable fade effect",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "auto",
+"label": "Enable autoplay",
+"default": true
+},
+{
+"type": "range",
+"id": "range",
+"label": "Autoplay seconds",
+"min": 3,
+"max": 6,
+"step": 1,
+"default": 3
+},
+{
+"type": "color",
+"id": "textcolor",
+"label": "Change color of the titles"
+},
+{
+"type": "color",
+"id": "navigation_color",
+"label": "Change color of the navigation arrows"
+},
+{
+"type": "color",
+"id": "btnbgcolor",
+"label": "Your button background hover color"
+},
+{
+"type": "color",
+"id": "btncolor",
+"label": "Your button text color"
+}
+] ,
+"blocks": [
+{
+"type": "card",
+"name": "Hero Image",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Your slideshow image"
+},
+{
+"type": "image_picker",
+"id": "mobile_image",
+"label": "Your slideshow mobile image"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Your title"
+},
+{
+"type": "text",
+"id": "subtitle",
+"label": "Your subtitle"
+},
+{
+"type": "text",
+"id": "btntext",
+"label": "Your button text"
+},
+{
+"type": "url",
+"id": "btnlink",
+"label": "Your button link"
+}
+]
+}
+] ,
+"presets": [
+{
+"name": "Flickity slideshow",
+"category":"Custom"
+}
+]
+}
+{% endschema %}

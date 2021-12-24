@@ -17,6 +17,11 @@
 {{ 'component-rating.css' | asset_url | stylesheet_tag }}
 
 <div class="card-wrapper">
+  {% for tag in product_card_product.tags %}
+ {% if tag == "Memory-Foam" %}
+   <div class="Memory-Foam">Memory Foam</div>
+ {% endif%}
+{% endfor %}
   <div class="card-information">
     <div class="card-information__wrapper">
       {%- if show_vendor -%}

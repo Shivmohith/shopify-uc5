@@ -5,11 +5,15 @@ if (!customElements.get('product-form')) {
 
       this.form = this.querySelector('form');
       this.form.querySelector('[name=id]').disabled = false;
-      this.querySelector('button[name=add]').disabled = true;
-      this.querySelector('button[name=add]').title = "Engraving text is mandatory"
-      this.querySelector('#your-engraving').value = ""
+
+      if (this.querySelector('#your-engraving') != null) {
+        this.form.querySelector('button[name=add]').disabled = true;
+        this.form.querySelector('button[name=add]').title = "Engraving text is mandatory"
+        this.form.querySelector('#your-engraving').value = ""
+        this.form.addEventListener('input', this.handleEngravingTextInput.bind(this));
+      }
+      
       this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
-      this.form.addEventListener('input', this.handleEngravingTextInput.bind(this));
       this.cartNotification = document.querySelector('cart-notification');
     }
 
@@ -67,11 +71,11 @@ if (!customElements.get('product-form')) {
 
     handleEngravingTextInput(evt) {
       if (!evt.target.value.length) {
-        this.querySelector('button[name=add]').disabled = true;
-        this.querySelector('button[name=add]').title = "Engraving text is mandatory"
+        this.form.querySelector('button[name=add]').disabled = true;
+        this.form.querySelector('button[name=add]').title = "Engraving text is mandatory";
       } else {
-        this.querySelector('button[name=add]').disabled = false;
-        this.querySelector('button[name=add]').title = ""
+        this.form.querySelector('button[name=add]').disabled = false;
+        this.form.querySelector('button[name=add]').title = "";
       }
     }
   });
